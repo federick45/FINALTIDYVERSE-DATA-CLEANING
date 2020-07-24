@@ -1,0 +1,67 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Ctrl+Shift+Enter*. 
+
+```{r}
+plot(cars)
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Ctrl+Alt+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Ctrl+Shift+K* to preview the HTML file).
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+install.packages("tidyverse")
+library(tidyverse)
+
+# test data
+test_x <- read.table("./UCI HAR Dataset/test/x_test.txt")
+test_y <- read.table("./UCI HAR Dataset/test/y_test.txt")
+test_sub <- read.table("./UCI HAR Dataset/test/subject_test.txt")
+
+# train data
+train_x <- read.table("./UCI HAR Dataset/train/x_train.txt")
+train_y <- read.table("./UCI HAR Dataset/train/y_train.txt")
+train_sub <- read.table("./UCI HAR Dataset/train/subject_train.txt")
+
+# data description
+features.list <- read.table("./UCI HAR Dataset/features.txt")
+
+# activity labels
+activity_label <- read.table("./UCI HAR Dataset/activity_labels.txt")
+
+# merges training and test dataset
+total_x <- rbind(test_x,train_x)
+total_y <- rbind(test_y,train_y)
+total_sub <- rbind(test_sub,train_sub)
+
+# Extracts only the measurements on the mean and standard deviation of each measurements
+req_col <- grep("mean|std",features.list$V2)
+req_x <- total_x[,req_col]
+
+# uses descriptive activity names to name the the activities in the data set and label the dataset
+colnames(total_y <- "activity")
+total__y$activity <- factor(total_y$activity,labels=activity_label[,2])
+colnames(total_sub) <- "subject"
+colnames(total_sub)
+total_sub$suject <- as.factor(total_sub$subject)
+total_sub$suject
+
+colames(req_x) <- (features.list[req_col,2])
+colnames(total_sub) <- "subject"
+colnames(total_sub)
+
+# from the data set in step 4, create a second, independent tidy data set with the average of each variable for each activity and each subject
+class(subject)
+c
+total <- cbind(total_y,total_sub,req_x)
+total
+str(total)
+summary(total)
+write.table(total,"total.txt",row.name=FALSE)
+
